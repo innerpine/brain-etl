@@ -17,6 +17,7 @@ from math import ceil
 from pathlib import Path
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from dotenv import load_dotenv
 from telegram import Update
 from telegram.ext import Application, ApplicationBuilder, CommandHandler, ContextTypes
 
@@ -334,8 +335,9 @@ async def stop_scheduler(application: Application) -> None:
 
 
 def main() -> None:
+    load_dotenv(Path(__file__).with_name(".env"))
     token = os.environ.get("BOT_TOKEN")
-    if not token:
+    if not token or token == "PASTE_YOUR_BOT_TOKEN_HERE":
         raise RuntimeError("BOT_TOKEN не задан")
 
     init_db()
